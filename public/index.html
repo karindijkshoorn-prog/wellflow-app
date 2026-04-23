@@ -16,7 +16,13 @@
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
 
 /* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;background:var(--white);border-bottom:1px solid var(--border);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:var(--white);border-bottom:1px solid var(--border);}
+@media(max-width:480px){
+  .nav-link{display:none;}
+  .nav-links{gap:8px;}
+  .btn{padding:8px 14px;font-size:12px;}
+  nav{padding:0.85rem 1rem;}
+}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--dark);}
 .nav-brand em{font-style:italic;color:var(--accent);}
 .nav-links{display:flex;align-items:center;gap:1rem;}
@@ -97,9 +103,9 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--text-soft);bord
 </nav>
 
 <section class="hero">
-  <div class="hero-tag">Built for wellness professionals</div>
+  <div class="hero-tag">Built for Pilates teachers and wellness professionals</div>
   <h1>Stop staring at a<br><em>blank caption box</em></h1>
-  <p>Upload your photo or video, choose your platform, and get three on-brand captions in seconds. Written for Pilates teachers, yoga instructors, breathwork facilitators, and mindfulness coaches.</p>
+  <p>You have the photos. You know what you want to say. But the blank box stops you every time. Wellflow reads your image, understands your world, and writes three ready-to-post captions in seconds. No generic AI output. No rewriting. Just captions that sound like you.</p>
   <div class="hero-actions">
     <button class="btn btn-accent btn-lg" onclick="openModal('signup')">Start free trial</button>
     <button class="btn btn-outline btn-lg" onclick="openModal('login')">Log in</button>
@@ -113,23 +119,23 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--text-soft);bord
     <div class="features-grid">
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
-        <h3>Visual analysis</h3>
-        <p>Upload an image or video and the tool reads what's in it to write captions that actually match your content.</p>
+        <h3>Reads your content</h3>
+        <p>Upload a photo or video from class and the tool analyses what it sees. Captions are written around your actual content, not a generic description you typed in.</p>
       </div>
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
-        <h3>3 options every time</h3>
-        <p>Get three distinct caption options per generation — different hooks, different angles, all on-brand.</p>
+        <h3>Three options, two minutes</h3>
+        <p>Get three distinct captions with different hooks and angles. Pick the one that feels right, tweak it if you want, copy and post.</p>
       </div>
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg></div>
-        <h3>Built for your niche</h3>
-        <p>Knows the language of wellness. No generic copy, no "level up" clichés. Just captions that sound like you.</p>
+        <h3>Knows your world</h3>
+        <p>No explaining yourself to a generic AI tool. Wellflow already knows the language, the audience, and what never to say in a wellness caption.</p>
       </div>
       <div class="feature">
         <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/></svg></div>
-        <h3>Save and export</h3>
-        <p>Bookmark your best captions and export them as a text file for scheduling or sharing with clients.</p>
+        <h3>Edit, save, repurpose</h3>
+        <p>Edit any caption directly on screen before copying. Save your favourites. Repurpose Instagram captions for LinkedIn or Facebook in one click.</p>
       </div>
     </div>
   </div>
@@ -153,7 +159,7 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--text-soft);bord
 </section>
 
 <footer>
-  &copy; 2026 Wellflow. Made for wellness professionals.
+  &copy; 2026 Wellflow. Built by a social media manager, for wellness professionals.
 </footer>
 
 <!-- AUTH MODAL -->
