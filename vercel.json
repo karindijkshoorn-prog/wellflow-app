@@ -1,12 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/**/*.js", "use": "@vercel/node" },
-    { "src": "public/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/app.html", "dest": "/public/app.html" },
-    { "src": "/(.*)", "dest": "/public/index.html" }
+  "rewrites": [
+    { "source": "/api/auth/:action", "destination": "/api/auth/[action]" },
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/app.html", "destination": "/public/app.html" },
+    { "source": "/(.*)", "destination": "/public/index.html" }
   ]
 }
