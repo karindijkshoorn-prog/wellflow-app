@@ -559,9 +559,10 @@ function repurpose(id, targetPlatform, btn) {
   btn.disabled = true;
   btn.textContent = 'Writing...';
 
+  var token = localStorage.getItem('wf_token');
   fetch('/api/generate', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
     body: JSON.stringify({
       topic: caption.hook + ' ' + caption.body,
       modality: document.getElementById('modality').value,
