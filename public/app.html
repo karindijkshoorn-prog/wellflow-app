@@ -3,261 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wellflow — Caption studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Wellflow</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --dark:#0A0A0A;--accent:#E8352C;--accent-light:#FDECEA;
-  --cream:#FAF6F5;--white:#FFFFFF;--text:#0A0A0A;
-  --text-mid:#3A3030;--text-soft:#8A8080;--border:#EDE5E4;
-  --radius:14px;--radius-sm:8px;--shadow:0 2px 16px rgba(0,0,0,0.06);
+  --berry:#7B3F5E;--berry-mid:#A05878;--berry-light:#F2E8ED;
+  --taupe:#C4B8AE;--taupe-light:#EDE8E3;--cream:#F8F5F0;--white:#FFFFFF;
+  --text:#1E1714;--text-mid:#5C4A44;--text-soft:#9C8880;
+  --gold:#C4965A;--radius:14px;--radius-sm:8px;--radius-pill:100px;
+  --shadow:0 2px 16px rgba(123,63,94,0.08);
 }
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
-.layout{display:grid;grid-template-columns:360px 1fr;min-height:100vh;}
-.sidebar{background:var(--dark);padding:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
-.sidebar-inner{padding:1.75rem;flex:1;}
+.layout{display:grid;grid-template-columns:340px 1fr;min-height:100vh;}
+.sidebar{background:#ffffff;padding:1.75rem;border-right:1px solid var(--taupe-light);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
 .main{padding:2rem 2rem 4rem;background:var(--cream);overflow-y:auto;}
-
-/* top bar */
-.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(255,255,255,0.1);}
-.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#FDFCFC;}
-.brand-name em{font-style:italic;color:#FF9B94;}
-.user-menu{display:flex;align-items:center;gap:8px;}
-.usage-pill{font-size:10px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:3px 10px;}
-.usage-pill.warning{color:#FFD580;border-color:rgba(255,213,128,0.3);}
-.logout-btn{background:none;border:none;font-size:11px;color:rgba(255,255,255,0.3);cursor:pointer;font-family:'Jost',sans-serif;transition:color 0.15s;}
-.logout-btn:hover{color:rgba(255,255,255,0.6);}
-
-/* upgrade banner */
-.upgrade-banner{background:rgba(232,53,44,0.15);border:1px solid rgba(232,53,44,0.3);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:1.25rem;display:none;}
-.upgrade-banner.show{display:block;}
-.upgrade-banner p{font-size:12px;color:#FF9B94;line-height:1.5;margin-bottom:8px;}
-.upgrade-btn{width:100%;padding:8px;background:var(--accent);color:white;border:none;border-radius:var(--radius-sm);font-size:12px;font-family:'Jost',sans-serif;font-weight:500;cursor:pointer;}
-
-/* upload */
-.section-label{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
-.upload-zone{border:1.5px dashed rgba(255,255,255,0.2);border-radius:var(--radius);padding:1.25rem;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:1.25rem;position:relative;background:rgba(255,255,255,0.03);}
-.upload-zone:hover,.upload-zone.drag{border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.07);}
-.upload-zone.has-media{border-style:solid;border-color:rgba(255,255,255,0.25);padding:0.75rem;}
-.upload-icon{width:32px;height:32px;background:rgba(255,255,255,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;}
-.upload-icon svg{width:16px;height:16px;fill:rgba(255,255,255,0.5);}
-.upload-title{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:3px;}
-.upload-sub{font-size:11px;color:rgba(255,255,255,0.35);}
-.upload-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:400;color:#111111;letter-spacing:0.02em;line-height:1;margin-bottom:4px;}
+.brand-name em{font-style:italic;color:var(--berry);}
+.brand-sub{font-size:11px;color:var(--text-soft);letter-spacing:0.1em;text-transform:uppercase;font-weight:300;}
+.brand{margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--taupe-light);}
+.section-label{font-size:10px;color:var(--text-soft);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;font-weight:400;}
+.upload-zone{border:1.5px dashed var(--taupe);border-radius:var(--radius);padding:1.25rem;text-align:center;margin-bottom:1.25rem;background:var(--cream);}
+.upload-zone.has-media{border-style:solid;padding:0.75rem;}
+.upload-icon{width:32px;height:32px;background:var(--taupe-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;}
+.upload-icon svg{width:16px;height:16px;fill:var(--text-soft);}
+.upload-title{font-size:13px;color:var(--text-mid);margin-bottom:4px;}
+.upload-sub{font-size:11px;color:var(--text-soft);}
+.choose-label{display:inline-block;margin-top:10px;padding:7px 18px;background:var(--berry);color:white;border-radius:var(--radius-pill);font-size:12px;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500;}
 .preview-wrap{position:relative;}
 .preview-img{width:100%;max-height:130px;object-fit:cover;border-radius:var(--radius-sm);display:block;}
-.preview-remove{position:absolute;top:6px;right:6px;width:22px;height:22px;background:rgba(0,0,0,0.65);border:none;border-radius:50%;color:white;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.analysing-badge{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:11px;color:rgba(255,255,255,0.5);}
-.analyse-spinner{width:10px;height:10px;border:1.5px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.6);border-radius:50%;animation:spin 0.7s linear infinite;}
-
-/* platforms */
+.preview-remove{position:absolute;top:6px;right:6px;width:22px;height:22px;background:rgba(0,0,0,0.6);border:none;border-radius:50%;color:white;font-size:12px;cursor:pointer;}
+.analysing{font-size:11px;color:var(--text-soft);margin-top:6px;font-style:italic;}
+.auto-badge{font-size:10px;color:#166534;margin-left:6px;}
 .platform-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem;}
-.platform-pill{padding:5px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:100px;font-size:11px;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.15s;font-family:'Jost',sans-serif;background:transparent;}
-.platform-pill.active{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.35);color:white;}
-
-/* fields */
+.platform-pill{padding:5px 12px;border:1px solid var(--taupe);border-radius:var(--radius-pill);font-size:11px;color:var(--text-soft);cursor:pointer;background:transparent;font-family:'Jost',sans-serif;transition:all 0.15s;}
+.platform-pill.active{background:var(--berry-light);border-color:var(--berry-mid);color:var(--berry);}
 .field{margin-bottom:12px;}
-label{display:block;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:5px;}
-select,textarea,input[type=text]{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;font-family:'Jost',sans-serif;color:rgba(255,255,255,0.88);transition:border-color 0.15s;appearance:none;}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.35)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-color:rgba(255,255,255,0.07);padding-right:28px;cursor:pointer;}
-select option{background:#111;color:white;}
-textarea{resize:vertical;min-height:60px;line-height:1.55;}
-input[type=text]::placeholder,textarea::placeholder{color:rgba(255,255,255,0.2);}
-select:focus,textarea:focus,input[type=text]:focus{outline:none;border-color:rgba(255,255,255,0.3);}
+label{display:block;font-size:11px;color:var(--text-soft);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:5px;}
+select,textarea,input[type=text]{width:100%;background:var(--cream);border:1px solid var(--taupe-light);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;font-family:'Jost',sans-serif;color:var(--text);appearance:none;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239C8880'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-color:var(--cream);padding-right:28px;cursor:pointer;}
+textarea{resize:vertical;min-height:80px;line-height:1.55;}
+select:focus,textarea:focus,input:focus{outline:none;border-color:var(--berry-mid);}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.auto-badge{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:0.05em;text-transform:uppercase;margin-left:6px;}
-.auto-badge.active{color:#A8D5B5;}
-
-/* generate btn */
-.generate-btn{width:100%;padding:13px;background:var(--white);color:var(--dark);border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:500;font-family:'Jost',sans-serif;cursor:pointer;letter-spacing:0.04em;transition:all 0.15s;margin-top:6px;}
-.generate-btn:hover{background:#F5F5F5;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.2);}
-.generate-btn:disabled{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.25);cursor:not-allowed;transform:none;box-shadow:none;}
-
-/* main */
-.main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
-.main-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;}
-.main-title em{font-style:italic;color:var(--accent);}
-.tabs{display:flex;margin-bottom:1.5rem;border-bottom:1px solid var(--border);}
-.tab{padding:8px 18px;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-soft);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif;}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-
-/* empty */
+.generate-btn{width:100%;padding:12px;background:var(--berry);color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:500;font-family:'Jost',sans-serif;cursor:pointer;margin-top:6px;transition:all 0.15s;}
+.generate-btn:hover{background:var(--berry-mid);}
+.generate-btn:disabled{background:var(--taupe);cursor:not-allowed;}
+.main-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--text);margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--taupe-light);}
+.main-title em{font-style:italic;color:var(--berry-mid);}
+.tabs{display:flex;margin-bottom:1.5rem;border-bottom:1px solid var(--taupe-light);}
+.tab{padding:8px 18px;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-soft);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif;}
+.tab.active{color:var(--berry);border-bottom-color:var(--berry);}
 .empty{text-align:center;padding:4rem 2rem;color:var(--text-soft);}
-.empty-icon{width:48px;height:48px;background:var(--accent-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
-.empty-icon svg{width:20px;height:20px;fill:var(--accent);}
+.empty-icon{width:48px;height:48px;background:var(--berry-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
+.empty-icon svg{width:20px;height:20px;fill:var(--berry-mid);}
 .empty h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;margin-bottom:6px;color:var(--text-mid);}
 .empty p{font-size:13px;line-height:1.6;max-width:280px;margin:0 auto;}
-
-/* loading */
 .loading{text-align:center;padding:3rem;color:var(--text-soft);}
-.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 1rem;}
+.spinner{width:28px;height:28px;border:2px solid var(--taupe-light);border-top-color:var(--berry-mid);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 1rem;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* results */
 .results-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
 .results-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-soft);}
-.export-all-btn{padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:11px;font-family:'Jost',sans-serif;color:var(--text-mid);background:transparent;cursor:pointer;transition:all 0.12s;}
-.export-all-btn:hover{border-color:var(--accent);color:var(--accent);}
-
-/* caption card */
-.caption-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:14px;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
-.caption-card:hover{box-shadow:0 4px 24px rgba(0,0,0,0.1);}
-.caption-card.saved{border-color:var(--accent);}
+.caption-card{background:var(--white);border:1px solid var(--taupe-light);border-radius:var(--radius);padding:1.5rem;margin-bottom:14px;box-shadow:var(--shadow);}
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.badge-wrap{display:flex;align-items:center;gap:6px;}
-.badge-num{width:22px;height:22px;background:var(--accent-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--accent);}
-.badge-plat{font-size:11px;color:var(--text-soft);}
-.card-actions{display:flex;gap:6px;}
-.btn-icon{width:30px;height:30px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;color:var(--text-soft);}
-.btn-icon:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
-.btn-icon.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
-.btn-icon svg{width:13px;height:13px;fill:currentColor;pointer-events:none;}
-.media-thumb{width:100%;max-height:110px;object-fit:cover;border-radius:var(--radius-sm);margin-bottom:12px;opacity:0.9;}
+.badge-num{width:22px;height:22px;background:var(--berry-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--berry);}
+.badge-plat{font-size:11px;color:var(--text-soft);margin-left:6px;}
 .hook-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;line-height:1.4;color:var(--text);margin-bottom:10px;}
 .body-text{font-size:13px;color:var(--text-mid);line-height:1.75;white-space:pre-wrap;margin-bottom:10px;}
-.cta-text{font-size:13px;color:var(--accent);font-style:italic;margin-bottom:12px;}
-.hashtag-row{padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:#B07D2A;line-height:1.9;}
-.copy-btn{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:11px;font-family:'Jost',sans-serif;color:var(--text-mid);background:transparent;cursor:pointer;transition:all 0.12s;}
-.copy-btn:hover{border-color:var(--accent);color:var(--accent);}
-.copy-btn.copied{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
-.vision-note{background:var(--accent-light);border:1px solid #F5BCBA;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--accent);line-height:1.6;margin-bottom:1rem;}
+.cta-text{font-size:13px;color:var(--berry-mid);font-style:italic;margin-bottom:12px;}
+.hashtag-row{padding-top:10px;border-top:1px solid var(--taupe-light);font-size:12px;color:var(--gold);line-height:1.9;margin-bottom:10px;}
+.copy-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border:1px solid var(--taupe);border-radius:var(--radius-pill);font-size:11px;font-family:'Jost',sans-serif;color:var(--text-mid);background:transparent;cursor:pointer;}
+.copy-btn:hover{border-color:var(--berry-mid);color:var(--berry);}
 .error-box{background:#FEF2F2;border:1px solid #FCA5A5;border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:#991B1B;line-height:1.6;}
-
-@media(max-width:720px){
-  .layout{grid-template-columns:1fr;}
-  .sidebar{position:static;height:auto;}
-  .main{padding:1.5rem 1rem 3rem;}
-}
+.vision-note{background:var(--berry-light);border:1px solid #DFC0CC;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--berry);line-height:1.6;margin-bottom:1rem;}
+[contenteditable]{outline:none;border-radius:4px;cursor:text;}
+[contenteditable]:hover{background:var(--berry-light);}
+[contenteditable]:focus{background:var(--berry-light);box-shadow:0 0 0 2px var(--berry-mid);padding:2px 4px;margin:-2px -4px;}
+.edit-hint{font-size:10px;color:var(--text-soft);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;opacity:0.6;}
+.repurpose-wrap{margin-top:10px;padding-top:10px;border-top:1px solid var(--taupe-light);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.repurpose-label{font-size:11px;color:var(--text-soft);}
+.repurpose-pill{padding:4px 10px;border:1px solid var(--taupe);border-radius:var(--radius-pill);font-size:11px;font-family:'Jost',sans-serif;color:var(--text-soft);background:transparent;cursor:pointer;transition:all 0.12s;}
+.repurpose-pill:hover{border-color:var(--berry-mid);color:var(--berry);background:var(--berry-light);}
+.repurpose-pill:disabled{opacity:0.4;cursor:not-allowed;}
+@media(max-width:720px){.layout{grid-template-columns:1fr;}.sidebar{position:static;height:auto;}.main{padding:1.5rem 1rem 3rem;}}
 </style>
 </head>
 <body>
 
+<input type="file" id="mediaInput" accept="image/*,video/*" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" onchange="handleMedia(this.files[0])" />
+
 <div class="layout">
 <aside class="sidebar">
-  <div class="sidebar-inner">
-    <div class="sidebar-top">
+  <div class="brand">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
       <div class="brand-name">well<em>flow</em></div>
-      <div class="user-menu">
-        <span class="usage-pill" id="usagePill"></span>
-        <button class="logout-btn" onclick="logout()">Log out</button>
-      </div>
+      <button onclick="logout()" style="background:none;border:none;font-size:11px;color:var(--text-soft);cursor:pointer;font-family:'Jost',sans-serif;">Log out</button>
     </div>
-
-    <div class="upgrade-banner" id="upgradeBanner">
-      <p>You've used all your free generations. Subscribe to keep going.</p>
-      <button class="upgrade-btn" onclick="subscribe()">Subscribe for €15/month</button>
-    </div>
-
-    <div class="section-label">Upload image or video</div>
-    <div class="upload-zone" id="uploadZone">
-      <input type="file" class="upload-input" id="mediaInput" accept="image/*,video/*" onchange="handleMedia(this.files[0])" />
-      <div id="uploadDefault">
-        <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
-        <div class="upload-title">Drop an image or video here</div>
-        <div class="upload-sub">The tool will analyse it and write captions to match</div>
-      </div>
-      <div id="uploadPreview" style="display:none;">
-        <div class="preview-wrap">
-          <img id="previewImg" class="preview-img" src="" alt="Preview" />
-          <button class="preview-remove" onclick="removeMedia(event)">✕</button>
-        </div>
-        <div class="analysing-badge" id="analysingBadge" style="display:none;">
-          <div class="analyse-spinner"></div> Analysing...
-        </div>
-      </div>
-    </div>
-
-    <div class="section-label">Platform</div>
-    <div class="platform-group" id="platforms">
-      <button class="platform-pill active" data-platform="Instagram">Instagram</button>
-      <button class="platform-pill" data-platform="Facebook">Facebook</button>
-      <button class="platform-pill" data-platform="LinkedIn">LinkedIn</button>
-      <button class="platform-pill" data-platform="Threads">Threads</button>
-    </div>
-
-    <div class="section-label">Post details</div>
-    <div class="row2">
-      <div class="field">
-        <label>Modality</label>
-        <select id="modality">
-          <option value="Pilates">Pilates</option>
-          <option value="yoga">Yoga</option>
-          <option value="breathwork">Breathwork</option>
-          <option value="mindfulness coaching">Mindfulness</option>
-          <option value="somatic movement">Somatic</option>
-          <option value="meditation">Meditation</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Post type</label>
-        <select id="post_type">
-          <option value="reel caption">Reel</option>
-          <option value="carousel intro">Carousel</option>
-          <option value="quote post">Quote post</option>
-          <option value="offer or programme post">Offer</option>
-          <option value="teaching tip">Tip post</option>
-          <option value="behind the scenes post">Behind scenes</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>What is this post about? <span class="auto-badge" id="topicAutoBadge"></span></label>
-      <textarea id="topic" placeholder="Describe your post, or upload media to auto-fill..."></textarea>
-    </div>
-
-    <div class="row2">
-      <div class="field">
-        <label>Audience</label>
-        <select id="audience">
-          <option value="complete beginners">Beginners</option>
-          <option value="regular practitioners">Regulars</option>
-          <option value="trainee teachers">Trainees</option>
-          <option value="burned-out professionals">Burned-out pros</option>
-          <option value="postpartum clients">Postpartum</option>
-          <option value="midlife women">Midlife women</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Tone</label>
-        <select id="tone">
-          <option value="warm and encouraging">Warm</option>
-          <option value="direct and honest">Direct</option>
-          <option value="educational">Educational</option>
-          <option value="conversational">Conversational</option>
-          <option value="quietly inspiring">Inspiring</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Business name (optional)</label>
-      <input type="text" id="clientName" placeholder="e.g. Pilates Ireland..." />
-    </div>
-
-    <div class="field">
-      <label>Keywords to include (optional)</label>
-      <input type="text" id="keywords" placeholder="e.g. reformer, breath..." />
-    </div>
-
-    <div class="field">
-      <label>Anything to avoid?</label>
-      <input type="text" id="avoid" placeholder="e.g. weight loss language..." />
-    </div>
-
-    <button class="generate-btn" id="genBtn" onclick="generate()">Generate 3 captions</button>
+    <div class="brand-sub">Social caption studio</div>
+    <div style="margin-top:6px;font-size:11px;color:var(--text-soft);" id="userName"></div>
+    <div style="font-size:11px;color:var(--berry);margin-top:2px;" id="usageInfo"></div>
   </div>
+
+  <div id="upgradeBanner" style="display:none;background:var(--berry-light);border:1px solid var(--taupe);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:1.25rem;">
+    <p style="font-size:12px;color:var(--berry);margin-bottom:8px;">You have used all 10 free generations. Subscribe to continue.</p>
+    <button onclick="subscribe()" style="width:100%;padding:8px;background:var(--berry);color:white;border:none;border-radius:var(--radius-sm);font-size:12px;font-family:'Jost',sans-serif;cursor:pointer;">Subscribe for €15 per month</button>
+  </div>
+
+  <div class="section-label">Upload image or video</div>
+  <div class="upload-zone" id="uploadZone">
+    <div id="uploadDefault">
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
+      <div class="upload-title">Upload an image or video</div>
+      <div class="upload-sub">The tool will analyse it and auto-fill your topic</div>
+      <label for="mediaInput" class="choose-label">Choose file</label>
+    </div>
+    <div id="uploadPreview" style="display:none;">
+      <div class="preview-wrap">
+        <img id="previewImg" class="preview-img" src="" alt="Preview" />
+        <button class="preview-remove" onclick="removeMedia(event)">x</button>
+      </div>
+      <div class="analysing" id="analysingBadge" style="display:none;">Analysing your content...</div>
+    </div>
+  </div>
+
+  <div class="section-label">Platform</div>
+  <div class="platform-group" id="platforms">
+    <button class="platform-pill active" data-platform="Instagram">Instagram</button>
+    <button class="platform-pill" data-platform="Facebook">Facebook</button>
+    <button class="platform-pill" data-platform="LinkedIn">LinkedIn</button>
+    <button class="platform-pill" data-platform="Threads">Threads</button>
+  </div>
+
+  <div class="section-label">Post details</div>
+  <div class="row2">
+    <div class="field">
+      <label>Modality</label>
+      <select id="modality">
+        <option value="Pilates">Pilates</option>
+        <option value="yoga">Yoga</option>
+        <option value="breathwork">Breathwork</option>
+        <option value="mindfulness coaching">Mindfulness</option>
+        <option value="somatic movement">Somatic</option>
+        <option value="meditation">Meditation</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Post type</label>
+      <select id="post_type">
+        <option value="reel caption">Reel</option>
+        <option value="carousel intro">Carousel</option>
+        <option value="quote post">Quote post</option>
+        <option value="offer or programme post">Offer</option>
+        <option value="teaching tip">Tip post</option>
+        <option value="behind the scenes post">Behind scenes</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>What is this post about? <span class="auto-badge" id="topicAutoBadge"></span></label>
+    <textarea id="topic" placeholder="Describe your post, or upload media to auto-fill..."></textarea>
+  </div>
+
+  <div class="row2">
+    <div class="field">
+      <label>Audience</label>
+      <select id="audience">
+        <option value="complete beginners">Beginners</option>
+        <option value="regular practitioners">Regulars</option>
+        <option value="trainee teachers">Trainees</option>
+        <option value="burned-out professionals">Burned-out pros</option>
+        <option value="postpartum clients">Postpartum</option>
+        <option value="midlife women">Midlife women</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Tone</label>
+      <select id="tone">
+        <option value="warm and encouraging">Warm</option>
+        <option value="direct and honest">Direct</option>
+        <option value="educational">Educational</option>
+        <option value="conversational">Conversational</option>
+        <option value="quietly inspiring">Inspiring</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Business name (optional)</label>
+    <input type="text" id="clientName" placeholder="e.g. Pilates Ireland..." />
+  </div>
+  <div class="field">
+    <label>Keywords (optional)</label>
+    <input type="text" id="keywords" placeholder="e.g. reformer, breath..." />
+  </div>
+  <div class="field">
+    <label>Anything to avoid?</label>
+    <input type="text" id="avoid" placeholder="e.g. weight loss language..." />
+  </div>
+
+  <button class="generate-btn" id="genBtn" onclick="generate()">Generate 3 captions</button>
 </aside>
 
 <main class="main">
-  <div class="main-header">
-    <div class="main-title">Your <em>captions</em></div>
-    <div id="savedCount" style="font-size:12px;color:var(--text-soft);"></div>
-  </div>
+  <div class="main-title">Your <em>captions</em></div>
   <div class="tabs">
-    <button class="tab active" onclick="showTab('generated',this)">Generated</button>
-    <button class="tab" onclick="showTab('saved',this)">Saved</button>
+    <button class="tab active" onclick="showTab(&apos;generated&apos;,this)">Generated</button>
+    <button class="tab" onclick="showTab(&apos;saved&apos;,this)">Saved</button>
   </div>
   <div id="generatedPanel">
     <div class="empty" id="emptyState">
@@ -272,51 +223,59 @@ select:focus,textarea:focus,input[type=text]:focus{outline:none;border-color:rgb
 </div>
 
 <script>
-let activePlatform = 'Instagram';
-let mediaBase64 = null;
-let mediaType = null;
-let saved = JSON.parse(localStorage.getItem('wf_saved') || '[]');
-let currentCaptions = [];
-let user = null;
+var activePlatform = 'Instagram';
+var mediaBase64 = null;
+var mediaType = null;
+var isAnalysing = false;
+var saved = JSON.parse(localStorage.getItem('wf_saved') || '[]');
+var currentCaptions = [];
 
-window.onload = async () => {
-  const token = localStorage.getItem('wf_token');
+window.onload = function() {
+  var token = localStorage.getItem('wf_token');
   if (!token) { window.location.href = '/'; return; }
-  try {
-    const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
-    if (!res.ok) { logout(); return; }
-    user = await res.json();
-    updateUsageUI();
-  } catch(e) { logout(); }
+
+  // Check auth and get user info
+  fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+    .then(function(r) { return r.json(); })
+    .then(function(user) {
+      if (user.error) { window.location.href = '/'; return; }
+      document.getElementById('userName').textContent = user.name || user.email;
+      var left = Math.max(0, 10 - (user.generations || 0));
+      if (!user.subscribed) {
+        if (left <= 0) {
+          document.getElementById('upgradeBanner').style.display = 'block';
+          document.getElementById('genBtn').disabled = true;
+        } else {
+          document.getElementById('usageInfo').textContent = left + ' free generations left';
+        }
+      }
+    })
+    .catch(function() { window.location.href = '/'; });
 
   updateSavedCount();
-  document.querySelectorAll('.platform-pill').forEach(p => {
-    p.addEventListener('click', () => {
-      document.querySelectorAll('.platform-pill').forEach(x => x.classList.remove('active'));
+  if (window.location.search.includes('subscribed=true')) {
+    var msg = document.createElement('div');
+    msg.style.cssText = 'background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:12px 16px;margin-bottom:1rem;font-size:13px;color:#166534;';
+    msg.textContent = 'Welcome to Wellflow Pro! You now have unlimited generations.';
+    document.getElementById('output').parentNode.insertBefore(msg, document.getElementById('output'));
+    setTimeout(function() { msg.remove(); }, 5000);
+    window.history.replaceState({}, '', '/app.html');
+  }
+
+  document.querySelectorAll('.platform-pill').forEach(function(p) {
+    p.addEventListener('click', function() {
+      document.querySelectorAll('.platform-pill').forEach(function(x) { x.classList.remove('active'); });
       p.classList.add('active');
       activePlatform = p.dataset.platform;
     });
   });
-  const zone = document.getElementById('uploadZone');
-  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
-  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag'); if (e.dataTransfer.files[0]) handleMedia(e.dataTransfer.files[0]); });
+  var zone = document.getElementById('uploadZone');
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    if (e.dataTransfer.files[0]) handleMedia(e.dataTransfer.files[0]);
+  });
 };
-
-function updateUsageUI() {
-  if (!user) return;
-  const pill = document.getElementById('usagePill');
-  const banner = document.getElementById('upgradeBanner');
-  if (user.subscribed) {
-    pill.textContent = 'Pro';
-    pill.className = 'usage-pill';
-  } else {
-    const left = Math.max(0, 10 - (user.generations || 0));
-    pill.textContent = left + ' free left';
-    pill.className = 'usage-pill' + (left <= 3 ? ' warning' : '');
-    if (left === 0) banner.classList.add('show');
-  }
-}
 
 function logout() {
   localStorage.removeItem('wf_token');
@@ -324,240 +283,316 @@ function logout() {
   window.location.href = '/';
 }
 
-async function subscribe() {
-  const token = localStorage.getItem('wf_token');
-  try {
-    const res = await fetch('/api/stripe/checkout', {
-      method: 'POST', headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }
-    });
-    const data = await res.json();
-    if (data.url) window.location.href = data.url;
-  } catch(e) { alert('Something went wrong. Please try again.'); }
+function subscribe() {
+  var token = localStorage.getItem('wf_token');
+  fetch('/api/stripe/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
+  }).then(function(r) { return r.json(); })
+  .then(function(data) { if (data.url) window.location.href = data.url; })
+  .catch(function(e) { alert('Something went wrong. Please try again.'); });
 }
 
 function updateSavedCount() {
-  const el = document.getElementById('savedCount');
-  el.innerHTML = saved.length > 0 ? `<strong style="color:var(--accent)">${saved.length}</strong> saved` : '';
+  var el = document.getElementById('savedCount');
+  if (el) el.innerHTML = saved.length > 0 ? '<strong style="color:var(--berry)">' + saved.length + '</strong> saved' : '';
 }
 
-async function handleMedia(file) {
+function handleMedia(file) {
   if (!file) return;
-  const isVideo = file.type.startsWith('video/');
-  document.getElementById('uploadZone').classList.add('has-media');
+  var isVideo = file.type.startsWith('video/');
+  var zone = document.getElementById('uploadZone');
+  zone.classList.add('has-media');
   document.getElementById('uploadDefault').style.display = 'none';
   document.getElementById('uploadPreview').style.display = 'block';
 
   if (isVideo) {
-    const url = URL.createObjectURL(file);
-    const video = document.createElement('video');
+    var url = URL.createObjectURL(file);
+    var video = document.createElement('video');
     video.src = url;
-    video.addEventListener('loadeddata', () => { video.currentTime = 0.5; });
-    video.addEventListener('seeked', () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth; canvas.height = video.videoHeight;
-      canvas.getContext('2d').drawImage(video, 0, 0);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      document.getElementById('previewImg').src = dataUrl;
-      mediaBase64 = dataUrl.split(',')[1];
-      mediaType = 'image/jpeg';
-      URL.revokeObjectURL(url);
-      analyseMedia();
+    video.muted = true;
+    video.addEventListener('loadeddata', function() { video.currentTime = 1.0; });
+    video.addEventListener('seeked', function() {
+      setTimeout(function() {
+        var canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 360;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        var dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        document.getElementById('previewImg').src = dataUrl;
+        mediaBase64 = dataUrl.split(',')[1];
+        mediaType = 'image/jpeg';
+        URL.revokeObjectURL(url);
+        analyseMedia();
+      }, 200);
     });
     video.load();
   } else {
-    const reader = new FileReader();
-    reader.onload = e => {
-      document.getElementById('previewImg').src = e.target.result;
-      mediaBase64 = e.target.result.split(',')[1];
-      mediaType = file.type;
-      analyseMedia();
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement('canvas');
+        var maxSize = 1568;
+        var w = img.width, h = img.height;
+        if (w > maxSize || h > maxSize) {
+          if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+          else { w = Math.round(w * maxSize / h); h = maxSize; }
+        }
+        canvas.width = w;
+        canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        var maxDim = 800;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+          else { w = Math.round(w * maxDim / h); h = maxDim; }
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        }
+        var quality = 0.7;
+        var compressed = canvas.toDataURL('image/jpeg', quality);
+        var targetBytes = 400 * 1024;
+        while (compressed.length * 0.75 > targetBytes && quality > 0.2) {
+          quality -= 0.1;
+          compressed = canvas.toDataURL('image/jpeg', quality);
+        }
+        document.getElementById('previewImg').src = compressed;
+        mediaBase64 = compressed.split(',')[1];
+        mediaType = 'image/jpeg';
+        analyseMedia();
+      };
+      img.src = e.target.result;
     };
     reader.readAsDataURL(file);
   }
 }
 
-async function analyseMedia() {
-  const token = localStorage.getItem('wf_token');
-  if (!mediaBase64 || !token) return;
-  document.getElementById('analysingBadge').style.display = 'inline-flex';
-  try {
-    const res = await fetch('/api/analyse', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: mediaBase64, mediaType })
-    });
-    const data = await res.json();
-    if (data.description) {
-      const topicField = document.getElementById('topic');
-      if (!topicField.value.trim()) {
-        topicField.value = data.description;
-        const badge = document.getElementById('topicAutoBadge');
-        badge.textContent = 'auto-filled'; badge.className = 'auto-badge active';
-      }
+function analyseMedia() {
+  if (!mediaBase64) return;
+  var badge = document.getElementById('analysingBadge');
+  var topicField = document.getElementById('topic');
+  var autoBadge = document.getElementById('topicAutoBadge');
+  var genBtn = document.getElementById('genBtn');
+  isAnalysing = true;
+  genBtn.disabled = true;
+  genBtn.textContent = 'Analysing...';
+  badge.style.display = 'block';
+
+  var token = localStorage.getItem('wf_token');
+  fetch('/api/analyse', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({ image: mediaBase64, mediaType: mediaType })
+  }).then(function(res) {
+    return res.json();
+  }).then(function(data) {
+    if (data.description && !topicField.value.trim()) {
+      topicField.value = data.description;
+      autoBadge.textContent = 'auto-filled';
     }
-  } catch(e) {}
-  document.getElementById('analysingBadge').style.display = 'none';
+  }).catch(function(e) {
+    console.log('Analyse error:', e);
+  }).finally(function() {
+    badge.style.display = 'none';
+    isAnalysing = false;
+    genBtn.disabled = false;
+    genBtn.textContent = 'Generate 3 captions';
+  });
 }
 
 function removeMedia(e) {
-  e.stopPropagation(); e.preventDefault();
-  mediaBase64 = null; mediaType = null;
+  e.stopPropagation();
+  e.preventDefault();
+  mediaBase64 = null;
+  mediaType = null;
   document.getElementById('uploadZone').classList.remove('has-media');
   document.getElementById('uploadDefault').style.display = 'block';
   document.getElementById('uploadPreview').style.display = 'none';
   document.getElementById('previewImg').src = '';
   document.getElementById('mediaInput').value = '';
   document.getElementById('topicAutoBadge').textContent = '';
-  document.getElementById('topicAutoBadge').className = 'auto-badge';
 }
 
 function showTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
   el.classList.add('active');
   document.getElementById('generatedPanel').style.display = tab === 'generated' ? 'block' : 'none';
   document.getElementById('savedPanel').style.display = tab === 'saved' ? 'block' : 'none';
   if (tab === 'saved') renderSaved();
 }
 
-async function generate() {
-  if (!user) return;
-  if (!user.subscribed && (user.generations || 0) >= 10) {
-    document.getElementById('upgradeBanner').classList.add('show');
-    return;
-  }
+function generate() {
+  var topic = document.getElementById('topic').value.trim();
+  var modality = document.getElementById('modality').value;
+  var postType = document.getElementById('post_type').value;
+  var audience = document.getElementById('audience').value;
+  var tone = document.getElementById('tone').value;
+  var clientName = document.getElementById('clientName').value.trim();
+  var keywords = document.getElementById('keywords').value.trim();
+  var avoid = document.getElementById('avoid').value.trim();
+  var btn = document.getElementById('genBtn');
+  var out = document.getElementById('output');
+  var empty = document.getElementById('emptyState');
 
-  const topic = document.getElementById('topic').value.trim();
   if (!topic && !mediaBase64) {
-    document.getElementById('emptyState').style.display = 'none';
-    document.getElementById('output').innerHTML = '<div class="error-box">Please upload an image or describe what your post is about.</div>';
+    empty.style.display = 'none';
+    out.innerHTML = '<div class="error-box">Please upload an image or describe what your post is about.</div>';
     return;
   }
 
-  const btn = document.getElementById('genBtn');
-  const out = document.getElementById('output');
   btn.disabled = true;
-  document.getElementById('emptyState').style.display = 'none';
+  empty.style.display = 'none';
   out.innerHTML = '<div class="loading"><div class="spinner"></div>Writing your captions...</div>';
 
-  try {
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + localStorage.getItem('wf_token'), 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        topic,
-        modality: document.getElementById('modality').value,
-        postType: document.getElementById('post_type').value,
-        audience: document.getElementById('audience').value,
-        tone: document.getElementById('tone').value,
+  var token = localStorage.getItem('wf_token');
+  fetch('/api/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+    body: JSON.stringify({
+      topic: topic,
+      modality: modality,
+      postType: postType,
+      audience: audience,
+      tone: tone,
+      platform: activePlatform,
+      clientName: clientName,
+      keywords: keywords,
+      avoid: avoid,
+      image: mediaBase64,
+      mediaType: mediaType
+    })
+  }).then(function(res) {
+    if (!res.ok) return res.json().then(function(e) { throw new Error(e.error || 'Server error'); });
+    return res.json();
+  }).then(function(parsed) {
+    if (!parsed || !parsed.captions) throw new Error('Invalid response from server');
+    currentCaptions = parsed.captions.map(function(c, i) {
+      return Object.assign({}, c, {
+        id: Date.now() + i,
         platform: activePlatform,
-        clientName: document.getElementById('clientName').value.trim(),
-        keywords: document.getElementById('keywords').value.trim(),
-        avoid: document.getElementById('avoid').value.trim(),
-        image: mediaBase64,
-        mediaType
-      })
+        thumbSrc: mediaBase64 ? document.getElementById('previewImg').src : null
+      });
     });
-
-    if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Generation failed'); }
-    const data = await res.json();
-
-    user.generations = (user.generations || 0) + 1;
-    updateUsageUI();
-
-    currentCaptions = data.captions.map((c, i) => ({
-      ...c, id: Date.now() + i, platform: activePlatform,
-      thumbSrc: mediaBase64 ? document.getElementById('previewImg').src : null
-    }));
-
-    let html = '';
+    var html = '';
     if (mediaBase64) html += '<div class="vision-note"><strong>Visual analysis active</strong> — captions written based on your uploaded content.</div>';
     html += renderCards(currentCaptions, false);
     out.innerHTML = html;
-
-  } catch(e) {
-    out.innerHTML = `<div class="error-box"><strong>Something went wrong:</strong> ${e.message}</div>`;
-  }
-  btn.disabled = false;
+  }).catch(function(e) {
+    out.innerHTML = '<div class="error-box"><strong>Something went wrong:</strong> ' + e.message + '</div>';
+  }).finally(function() {
+    btn.disabled = false;
+    btn.textContent = 'Generate 3 captions';
+  });
 }
 
 function renderCards(captions, isSaved) {
-  const meta = `<div class="results-meta">
-    <div class="results-label">${captions.length} caption${captions.length !== 1 ? 's' : ''} ${isSaved ? 'saved' : 'generated'}</div>
-    ${!isSaved ? '<button class="export-all-btn" onclick="exportAll()">Export all as .txt</button>' : ''}
-  </div>`;
-  const cards = captions.map((c, i) => {
-    const isSavedCard = saved.some(s => s.id === c.id);
-    const fullText = `${c.hook}\n\n${c.body}\n\n${c.cta}\n\n${c.hashtags.join(' ')}`;
+  var meta = '<div class="results-meta"><div class="results-label">' + captions.length + ' captions ' + (isSaved ? 'saved' : 'generated') + '</div></div>';
+  var cards = captions.map(function(c, i) {
+    var isSavedCard = saved.some(function(s) { return s.id === c.id; });
+    var fullText = c.hook + '\n\n' + c.body + '\n\n' + c.cta + '\n\n' + c.hashtags.join(' ');
     window['_cap_' + c.id] = fullText;
-    return `<div class="caption-card${isSavedCard ? ' saved' : ''}" id="card_${c.id}">
-      <div class="card-top">
-        <div class="badge-wrap">
-          <div class="badge-num">${i + 1}</div>
-          <span class="badge-plat">${c.platform || activePlatform}</span>
-        </div>
-        <div class="card-actions">
-          <button class="btn-icon${isSavedCard ? ' active' : ''}" onclick="toggleSave(${c.id})" title="Save">
-            <svg viewBox="0 0 24 24"><path d="${isSavedCard ? 'M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z' : 'M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z'}"/></svg>
-          </button>
-          <button class="btn-icon" onclick="copyCaption(${c.id})" title="Copy">
-            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-          </button>
-        </div>
-      </div>
-      ${c.thumbSrc ? `<img class="media-thumb" src="${c.thumbSrc}" alt="" />` : ''}
-      <div class="hook-text">${esc(c.hook)}</div>
-      <div class="body-text">${esc(c.body)}</div>
-      <div class="cta-text">${esc(c.cta)}</div>
-      <div class="hashtag-row">${c.hashtags.join(' ')}</div>
-      <button class="copy-btn" id="copybtn_${c.id}" onclick="copyCaption(${c.id})">
-        <svg style="width:11px;height:11px;fill:currentColor;" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-    2-2zm0 16H8V7h11v14z"/></svg>
-        Copy caption + hashtags
-      </button>
-    </div>`;
+    var platforms = ['Instagram','Facebook','LinkedIn','Threads'].filter(function(p) { return p !== (c.platform || activePlatform); });
+    var repurposeBtns = platforms.map(function(p) {
+      return '<button class="repurpose-pill" onclick="repurpose(' + c.id + ',&quot;' + p + '&quot;,this)">' + p + '</button>';
+    }).join('');
+    return '<div class="caption-card" id="card_' + c.id + '">' +
+      '<div class="card-top"><div style="display:flex;align-items:center;"><div class="badge-num">' + (i+1) + '</div><span class="badge-plat">' + (c.platform || activePlatform) + '</span></div>' +
+      '<button class="copy-btn" id="copybtn_' + c.id + '" onclick="copyCaption(' + c.id + ')">Copy</button></div>' +
+      (c.thumbSrc ? '<img style="width:100%;max-height:110px;object-fit:cover;border-radius:8px;margin-bottom:12px;" src="' + c.thumbSrc + '" alt="" />' : '') +
+      '<div class="edit-hint">Click any text to edit</div>' +
+      '<div class="hook-text" contenteditable="true" id="hook_' + c.id + '">' + esc(c.hook) + '</div>' +
+      '<div class="body-text" contenteditable="true" id="body_' + c.id + '">' + esc(c.body) + '</div>' +
+      '<div class="cta-text" contenteditable="true" id="cta_' + c.id + '">' + esc(c.cta) + '</div>' +
+      '<div class="hashtag-row" contenteditable="true" id="tags_' + c.id + '">' + c.hashtags.join(' ') + '</div>' +
+      '<div class="repurpose-wrap"><span class="repurpose-label">Repurpose for:</span>' + repurposeBtns + '</div>' +
+      '</div>';
   }).join('');
   return meta + cards;
 }
 
-function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
 function copyCaption(id) {
-  const text = window['_cap_' + id];
+  var hook = document.getElementById('hook_' + id);
+  var body = document.getElementById('body_' + id);
+  var cta = document.getElementById('cta_' + id);
+  var tags = document.getElementById('tags_' + id);
+  var text = hook && body && cta && tags
+    ? [hook.innerText, body.innerText, cta.innerText, tags.innerText].join('\n\n')
+    : window['_cap_' + id];
   if (!text) return;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copybtn_' + id);
-    if (btn) { btn.textContent = 'Copied'; btn.classList.add('copied'); setTimeout(() => { btn.innerHTML = '<svg style="width:11px;height:11px;fill:currentColor;" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Copy caption + hashtags'; btn.classList.remove('copied'); }, 2000); }
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copybtn_' + id);
+    if (btn) {
+      btn.textContent = 'Copied';
+      setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+    }
   });
 }
 
 function toggleSave(id) {
-  const caption = currentCaptions.find(c => c.id === id) || saved.find(c => c.id === id);
+  var caption = currentCaptions.find(function(c) { return c.id === id; }) || saved.find(function(c) { return c.id === id; });
   if (!caption) return;
-  const idx = saved.findIndex(s => s.id === id);
+  var idx = saved.findIndex(function(s) { return s.id === id; });
   if (idx > -1) saved.splice(idx, 1); else saved.push(caption);
   localStorage.setItem('wf_saved', JSON.stringify(saved));
   updateSavedCount();
-  const card = document.getElementById('card_' + id);
-  if (card) {
-    const isSavedNow = saved.some(s => s.id === id);
-    card.classList.toggle('saved', isSavedNow);
-    const btn = card.querySelector('.btn-icon');
-    if (btn) { btn.classList.toggle('active', isSavedNow); btn.querySelector('path').setAttribute('d', isSavedNow ? 'M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z' : 'M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z'); }
-  }
 }
 
 function renderSaved() {
-  const out = document.getElementById('savedOutput');
-  if (!saved.length) { out.innerHTML = '<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/></svg></div><h3>Nothing saved yet</h3><p>Hit the bookmark icon on any caption to save it here.</p></div>'; return; }
-  saved.forEach(c => { window['_cap_' + c.id] = `${c.hook}\n\n${c.body}\n\n${c.cta}\n\n${c.hashtags.join(' ')}`; });
+  var out = document.getElementById('savedOutput');
+  if (!saved.length) {
+    out.innerHTML = '<div class="empty"><h3>Nothing saved yet</h3><p>Copy a caption you like to save it here.</p></div>';
+    return;
+  }
+  saved.forEach(function(c) { window['_cap_' + c.id] = c.hook + '\n\n' + c.body + '\n\n' + c.cta + '\n\n' + c.hashtags.join(' '); });
   out.innerHTML = renderCards(saved, true);
 }
 
-function exportAll() {
-  if (!currentCaptions.length) return;
-  const lines = currentCaptions.map((c, i) => `OPTION ${i+1} — ${c.platform}\n${'─'.repeat(40)}\n${c.hook}\n\n${c.body}\n\n${c.cta}\n\n${c.hashtags.join(' ')}\n`).join('\n\n');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([lines], {type:'text/plain'}));
-  a.download = 'wellflow-captions.txt'; a.click();
+function repurpose(id, targetPlatform, btn) {
+  var caption = currentCaptions.find(function(c) { return c.id === id; }) || saved.find(function(c) { return c.id === id; });
+  if (!caption) return;
+  var wrap = document.getElementById('repurpose_' + id);
+  btn.disabled = true;
+  btn.textContent = 'Writing...';
+
+  fetch('/api/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      topic: caption.hook + ' ' + caption.body,
+      modality: document.getElementById('modality').value,
+      postType: targetPlatform + ' post',
+      audience: document.getElementById('audience').value,
+      tone: document.getElementById('tone').value,
+      platform: targetPlatform
+    })
+  }).then(function(res) { return res.json(); })
+  .then(function(data) {
+    var parsed = data.captions ? data.captions[0] : null;
+    if (!parsed) throw new Error('No captions returned');
+    var newCaption = Object.assign({}, parsed, { id: Date.now(), platform: targetPlatform, thumbSrc: caption.thumbSrc });
+    currentCaptions.push(newCaption);
+    window['_cap_' + newCaption.id] = newCaption.hook + '\n\n' + newCaption.body + '\n\n' + newCaption.cta + '\n\n' + newCaption.hashtags.join(' ');
+    var existingCard = document.getElementById('card_' + id);
+    var newHtml = '<div class="caption-card" id="card_' + newCaption.id + '" style="border-left:3px solid var(--berry-mid);">' +
+      '<div class="card-top"><div style="display:flex;align-items:center;"><div class="badge-num">R</div><span class="badge-plat">' + targetPlatform + ' repurposed</span></div>' +
+      '<button class="copy-btn" id="copybtn_' + newCaption.id + '" onclick="copyCaption(' + newCaption.id + ')">Copy</button></div>' +
+      '<div class="hook-text" contenteditable="true" id="hook_' + newCaption.id + '">' + esc(newCaption.hook) + '</div>' +
+      '<div class="body-text" contenteditable="true" id="body_' + newCaption.id + '">' + esc(newCaption.body) + '</div>' +
+      '<div class="cta-text" contenteditable="true" id="cta_' + newCaption.id + '">' + esc(newCaption.cta) + '</div>' +
+      '<div class="hashtag-row" contenteditable="true" id="tags_' + newCaption.id + '">' + newCaption.hashtags.join(' ') + '</div>' +
+      '</div>';
+    existingCard.insertAdjacentHTML('afterend', newHtml);
+  }).catch(function(e) {
+    btn.textContent = 'Failed';
+  }).finally(function() {
+    btn.disabled = false;
+    btn.textContent = targetPlatform;
+  });
 }
 </script>
 </body>
