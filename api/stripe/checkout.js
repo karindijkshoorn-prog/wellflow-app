@@ -1,10 +1,15 @@
+import { createClient } from '@supabase/supabase-js';
 import jwt from 'jsonwebtoken';
 import Stripe from 'stripe';
-import { users } from './auth/[action].js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
+);
 
 const JWT_SECRET = process.env.JWT_SECRET || 'wellflow-secret-change-this';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const PRICE_ID = process.env.STRIPE_PRICE_ID; // Your €15/month recurring price ID from Stripe dashboard
+const PRICE_ID = process.env.STRIPE_PRICE_ID;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
@@ -21,7 +26,12 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Invalid token.' });
   }
 
-  const user = users.get(userEmail);
+  const { data: user } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', userEmail)
+    .single();
+
   if (!user) return res.status(401).json({ error: 'User not found.' });
 
   try {

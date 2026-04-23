@@ -1,5 +1,10 @@
+import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
-import { users } from '../auth/[action].js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
+);
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -31,21 +36,26 @@ export default async function handler(req, res) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const email = session.customer_email;
-    if (email && users.has(email)) {
-      const user = users.get(email);
-      user.subscribed = true;
-      user.stripeCustomerId = session.customer;
+    if (email) {
+      await supabase
+        .from('users')
+        .update({ subscribed: true, stripe_customer_id: session.customer })
+        .eq('email', email);
     }
   }
 
   if (event.type === 'customer.subscription.deleted') {
     const subscription = event.data.object;
-    // Find user by stripe customer ID and revoke subscription
-    for (const [email, user] of users.entries()) {
-      if (user.stripeCustomerId === subscription.customer) {
-        user.subscribed = false;
-        break;
-      }
+    const { data: users } = await supabase
+      .from('users')
+      .select('email')
+      .eq('stripe_customer_id', subscription.customer);
+
+    if (users && users.length > 0) {
+      await supabase
+        .from('users')
+        .update({ subscribed: false })
+        .eq('stripe_customer_id', subscription.customer);
     }
   }
 

@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         role: 'user',
         content: [
           { type: 'image', source: { type: 'base64', media_type: mediaType || 'image/jpeg', data: image } },
-          { type: 'text', text: 'You are helping a wellness professional create social media captions. Describe what you see in this image in 1-2 sentences to help write a relevant caption. Focus on the activity, setting, mood, and any visible movement or props. Be specific and practical. Do not mention people\'s names. Keep it under 60 words.' }
+          { type: 'text', text: "You are helping a wellness professional create social media captions. Describe what you see in this image in 1-2 sentences to help write a relevant caption. Focus on the activity, setting, mood, and any visible movement or props. Be specific and practical. Do not mention people's names. Keep it under 60 words." }
         ]
       }]
     });
@@ -36,6 +36,6 @@ export default async function handler(req, res) {
     const description = message.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
     return res.status(200).json({ description });
   } catch(e) {
-    return res.status(500).json({ error: 'Analysis failed.' });
+    return res.status(500).json({ error: 'Analysis failed: ' + e.message });
   }
 }

@@ -1,11 +1,13 @@
+import { createClient } from '@supabase/supabase-js';
 import jwt from 'jsonwebtoken';
 import Anthropic from '@anthropic-ai/sdk';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'wellflow-secret-change-this';
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
+);
 
-// Shared in-memory users store (same as auth endpoint)
-// In production replace with a real database
-import { users } from './auth/[action].js';
+const JWT_SECRET = process.env.JWT_SECRET || 'wellflow-secret-change-this';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
@@ -22,10 +24,14 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Invalid token.' });
   }
 
-  const user = users.get(userEmail);
+  const { data: user } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', userEmail)
+    .single();
+
   if (!user) return res.status(401).json({ error: 'User not found.' });
 
-  // Check usage limits
   if (!user.subscribed && user.generations >= 10) {
     return res.status(403).json({ error: 'Free trial limit reached. Please subscribe to continue.' });
   }
@@ -33,10 +39,10 @@ export default async function handler(req, res) {
   const { topic, modality, postType, audience, tone, platform, clientName, keywords, avoid, image, mediaType } = req.body;
 
   const platformGuidance = {
-    Instagram: 'Instagram: hook grabs in 1-2 lines, body 80-150 words, 5-8 hashtags',
-    Facebook: 'Facebook: slightly longer and more conversational, warmer community feel, 2-3 hashtags max',
-    LinkedIn: 'LinkedIn: professional but human, 100-180 words, 3-5 hashtags, no salesy tone',
-    Threads: 'Threads: short and punchy, under 80 words, 1-3 hashtags, conversational'
+    Instagram: 'Instagram: hook grabs in 1-2 lines, body 150-220 words, 3-5 targeted hashtags only',
+    Facebook: 'Facebook: conversational and warm, 180-250 words, 3-5 hashtags',
+    LinkedIn: 'LinkedIn: professional but human, 200-280 words, 5-8 hashtags, no salesy tone',
+    Threads: 'Threads: punchy but not too short, 80-120 words, 3-5 hashtags, conversational'
   };
 
   const extras = [];
@@ -59,13 +65,14 @@ Non-negotiable rules:
 - No dashes anywhere in the text
 - Never use the phrases "level up" or "alignment"
 - Each caption opens with a strong scroll-stopping hook (first line stands alone)
+- Keep captions concise and easy to read, no fluff, no padding
 - Body should feel personal and specific, not generic wellness speak
 - End with a soft engagement CTA that invites a response, not a direct sign-up push
 - Lowercase hashtags only, always
 - Never start three options the same way
 
 Return ONLY a valid JSON object. No markdown, no backticks, no explanation. Exactly this format:
-{"captions":[{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]},{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]},{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`;
+{"captions":[{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3"]},{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3"]},{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3"]}]}`;
 
   const userContent = image
     ? [
@@ -78,18 +85,22 @@ Return ONLY a valid JSON object. No markdown, no backticks, no explanation. Exac
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const message = await anthropic.messages.create({
       model: 'claude-opus-4-5',
-      max_tokens: 2000,
+      max_tokens: 3000,
       messages: [{ role: 'user', content: userContent }]
     });
 
     const raw = message.content.filter(b => b.type === 'text').map(b => b.text).join('');
     const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
+    const start = clean.indexOf('{');
+    const end = clean.lastIndexOf('}');
+    const result = JSON.parse(clean.slice(start, end + 1));
 
-    // Increment generation count
-    user.generations = (user.generations || 0) + 1;
+    await supabase
+      .from('users')
+      .update({ generations: user.generations + 1 })
+      .eq('email', userEmail);
 
-    return res.status(200).json(parsed);
+    return res.status(200).json(result);
   } catch(e) {
     return res.status(500).json({ error: 'Generation failed: ' + e.message });
   }
