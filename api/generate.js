@@ -84,7 +84,7 @@ Return ONLY a valid JSON object. No markdown, no backticks, no explanation. Exac
   try {
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const message = await anthropic.messages.create({
-      model: 'claude-opus-4-5',
+      model: 'claude-opus-4-7',
       max_tokens: 3000,
       messages: [{ role: 'user', content: userContent }]
     });
