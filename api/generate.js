@@ -9,6 +9,30 @@ const supabase = createClient(
 
 const JWT_SECRET = process.env.JWT_SECRET || 'wellflow-secret-change-this';
 
+const captionTool = {
+  name: 'generate_captions',
+  description: 'Return exactly three social media captions as structured data.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      captions: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            hook:     { type: 'string', description: 'Opening hook line — stands alone, scroll-stopping' },
+            body:     { type: 'string', description: 'Caption body' },
+            cta:      { type: 'string', description: 'Soft engagement call to action' },
+            hashtags: { type: 'array', items: { type: 'string' }, description: 'Lowercase hashtags including the # symbol' }
+          },
+          required: ['hook', 'body', 'cta', 'hashtags']
+        }
+      }
+    },
+    required: ['captions']
+  }
+};
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
 
@@ -40,16 +64,16 @@ export default async function handler(req, res) {
 
   const platformGuidance = {
     Instagram: 'Instagram: hook grabs in 1-2 lines, body 150-220 words, 3-5 targeted hashtags only',
-    Facebook: 'Facebook: conversational and warm, 180-250 words, 3-5 hashtags',
-    LinkedIn: 'LinkedIn: professional but human, 200-280 words, 5-8 hashtags, no salesy tone',
-    Threads: 'Threads: punchy but not too short, 80-120 words, 3-5 hashtags, conversational'
+    Facebook:  'Facebook: conversational and warm, 180-250 words, 3-5 hashtags',
+    LinkedIn:  'LinkedIn: professional but human, 200-280 words, 5-8 hashtags, no salesy tone',
+    Threads:   'Threads: punchy but not too short, 80-120 words, 3-5 hashtags, conversational'
   };
 
   const extras = [];
   if (clientName) extras.push(`Business or client name to reference naturally if relevant: ${clientName}`);
-  if (keywords) extras.push(`Keywords to weave in naturally: ${keywords}`);
-  if (avoid) extras.push(`Avoid: ${avoid}`);
-  if (image) extras.push(`Note: captions should reflect and be inspired by the visual content provided.`);
+  if (keywords)   extras.push(`Keywords to weave in naturally: ${keywords}`);
+  if (avoid)      extras.push(`Avoid: ${avoid}`);
+  if (image)      extras.push(`Note: captions should reflect and be inspired by the visual content provided.`);
 
   const promptText = `You are an expert social media copywriter specialising in wellness businesses. Write 3 distinct ${platform} ${postType}s for a ${modality} professional.
 
@@ -69,10 +93,7 @@ Non-negotiable rules:
 - Body should feel personal and specific, not generic wellness speak
 - End with a soft engagement CTA that invites a response, not a direct sign-up push
 - Lowercase hashtags only, always
-- Never start three options the same way
-
-Return ONLY a valid JSON object. No markdown, no backticks, no explanation. Exactly this format:
-{"captions":[{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3"]},{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3"]},{"hook":"...","body":"...","cta":"...","hashtags":["#tag1","#tag2","#tag3"]}]}`;
+- Never start three options the same way`;
 
   const userContent = image
     ? [
@@ -85,22 +106,21 @@ Return ONLY a valid JSON object. No markdown, no backticks, no explanation. Exac
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const message = await anthropic.messages.create({
       model: 'claude-opus-4-7',
-      max_tokens: 3000,
+      max_tokens: 4096,
+      tools: [captionTool],
+      tool_choice: { type: 'tool', name: 'generate_captions' },
       messages: [{ role: 'user', content: userContent }]
     });
 
-    const raw = message.content.filter(b => b.type === 'text').map(b => b.text).join('');
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const start = clean.indexOf('{');
-    const end = clean.lastIndexOf('}');
-    const result = JSON.parse(clean.slice(start, end + 1));
+    const toolUse = message.content.find(b => b.type === 'tool_use');
+    if (!toolUse) throw new Error('No structured response from model');
 
     await supabase
       .from('users')
       .update({ generations: user.generations + 1 })
       .eq('email', userEmail);
 
-    return res.status(200).json(result);
+    return res.status(200).json(toolUse.input);
   } catch(e) {
     return res.status(500).json({ error: 'Generation failed: ' + e.message });
   }
