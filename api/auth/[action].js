@@ -25,7 +25,7 @@ async function sendResetEmail(toEmail, resetUrl) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Wellflow <noreply@karindijkshoorn.com>',
+      from: 'Wellflow <noreply@wellflow.karindijkshoorn.com>',
       to: toEmail,
       subject: 'Reset your Wellflow password',
       html: `<p style="font-family:sans-serif;font-size:15px;color:#1E1714">Hi,</p>
