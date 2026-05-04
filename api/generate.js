@@ -61,7 +61,7 @@ ${extras.join('\n')}
 
 Non-negotiable rules:
 - No emojis anywhere
-- Sentence case only, no unnecessary capitals
+- Sentence case only: capitalise the first word of each sentence and proper nouns, lowercase everywhere else
 - No dashes anywhere in the text
 - Never use the phrases "level up" or "alignment"
 - Each caption opens with a strong scroll-stopping hook (first line stands alone)
