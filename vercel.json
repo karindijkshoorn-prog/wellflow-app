@@ -4,6 +4,7 @@
     { "source": "/api/auth/:action", "destination": "/api/auth/[action]" },
     { "source": "/api/:path*", "destination": "/api/:path*" },
     { "source": "/app.html", "destination": "/public/app.html" },
+    { "source": "/reset-password.html", "destination": "/public/reset-password.html" },
     { "source": "/(.*)", "destination": "/public/index.html" }
   ]
 }

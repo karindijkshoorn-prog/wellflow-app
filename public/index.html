@@ -170,10 +170,23 @@ footer{text-align:center;padding:2rem;font-size:12px;color:var(--text-soft);bord
       <div class="modal-title">Welcome back</div>
       <div class="modal-sub">Log in to your Wellflow account</div>
       <div class="form-field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com" /></div>
-      <div class="form-field"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••" /></div>
+      <div class="form-field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" />
+        <div style="text-align:right;margin-top:5px;"><a onclick="switchForm('forgot')" style="font-size:12px;color:var(--accent);cursor:pointer;">Forgot password?</a></div>
+      </div>
       <div class="form-error" id="loginError"></div>
       <button class="btn btn-primary" style="width:100%;padding:11px;margin-top:4px;" onclick="handleLogin()">Log in</button>
       <div class="form-switch">Don't have an account? <a onclick="switchForm('signup')">Start free trial</a></div>
+    </div>
+    <div id="forgotForm" style="display:none;">
+      <div class="modal-title">Reset password</div>
+      <div class="modal-sub">Enter your email and we'll send you a reset link.</div>
+      <div class="form-field"><label>Email</label><input type="email" id="forgotEmail" placeholder="you@example.com" /></div>
+      <div class="form-error" id="forgotError"></div>
+      <div id="forgotSuccess" style="display:none;font-size:13px;color:#166534;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 12px;margin-top:8px;">Check your inbox — a reset link is on its way.</div>
+      <button class="btn btn-primary" id="forgotBtn" style="width:100%;padding:11px;margin-top:12px;" onclick="handleForgotPassword()">Send reset link</button>
+      <div class="form-switch"><a onclick="switchForm('login')">Back to log in</a></div>
     </div>
     <div id="signupForm" style="display:none;">
       <div class="modal-title">Start your free trial</div>
@@ -198,6 +211,7 @@ function closeModalOutside(e) { if (e.target === document.getElementById('modalO
 function switchForm(type) {
   document.getElementById('loginForm').style.display = type === 'login' ? 'block' : 'none';
   document.getElementById('signupForm').style.display = type === 'signup' ? 'block' : 'none';
+  document.getElementById('forgotForm').style.display = type === 'forgot' ? 'block' : 'none';
 }
 
 async function handleLogin() {
@@ -217,6 +231,26 @@ async function handleLogin() {
     localStorage.setItem('wf_user', JSON.stringify(data.user));
     window.location.href = '/app.html';
   } catch(e) { err.textContent = 'Something went wrong. Please try again.'; }
+}
+
+async function handleForgotPassword() {
+  const email = document.getElementById('forgotEmail').value.trim();
+  const err = document.getElementById('forgotError');
+  const success = document.getElementById('forgotSuccess');
+  const btn = document.getElementById('forgotBtn');
+  if (!email) { err.textContent = 'Please enter your email.'; return; }
+  err.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  try {
+    const res = await fetch('/api/auth/reset-request', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email })
+    });
+    if (!res.ok) { const d = await res.json(); err.textContent = d.error || 'Something went wrong.'; btn.disabled = false; btn.textContent = 'Send reset link'; return; }
+    success.style.display = 'block';
+    btn.style.display = 'none';
+  } catch(e) { err.textContent = 'Something went wrong. Please try again.'; btn.disabled = false; btn.textContent = 'Send reset link'; }
 }
 
 async function handleSignup() {
