@@ -16,6 +16,8 @@ function generateToken(email) {
 }
 
 async function sendResetEmail(toEmail, resetUrl) {
+  if (!process.env.RESEND_API_KEY) throw new Error('RESEND_API_KEY is not set');
+
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -32,7 +34,10 @@ async function sendResetEmail(toEmail, resetUrl) {
 <p style="font-family:sans-serif;font-size:13px;color:#9C8880">This link expires in 1 hour. If you didn't request this, you can ignore this email — your password won't change.</p>`,
     }),
   });
-  if (!res.ok) throw new Error('Resend API error');
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(`Resend ${res.status}: ${body.message || body.name || JSON.stringify(body)}`);
+  }
 }
 
 export default async function handler(req, res) {
@@ -136,7 +141,7 @@ export default async function handler(req, res) {
       try {
         await sendResetEmail(email, resetUrl);
       } catch (e) {
-        return res.status(500).json({ error: 'Could not send reset email. Please try again.' });
+        return res.status(500).json({ error: e.message });
       }
     }
 
